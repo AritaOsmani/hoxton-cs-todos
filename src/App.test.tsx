@@ -117,19 +117,37 @@ describe('App', () => {
             const display = screen.getByTestId(`todo-${todo.id}`)
             expect(display.textContent).toBe('New todo, yay!X')
         }
-        it('when remove button is clicked, it removes the todo`', () => {
-            render(<App />)
-            const selectedTodo = screen.getByTestId('todo-1')
-            const removeBtn = within(selectedTodo).getByText('X')
-            fireEvent.click(removeBtn)
-
-            const remaining = screen.getByTestId('todo-2')
-            expect(remaining.textContent).toBe('New todo, yay!X')
-
-        })
-
     })
 
+    it('when remove button is clicked, it removes the todo`', () => {
+
+        render(<App />)
+        const addTodoButton = screen.getByText('ADD TODO')
+        fireEvent.click(addTodoButton)
+        fireEvent.click(addTodoButton)
+        const todos = [
+            {
+                id: 1,
+                title: 'New todo, yay!'
+            },
+            {
+                id: 2,
+                title: 'New todo, yay!'
+            }
+        ]
+        for (const todo of todos) {
+            const display = screen.getByTestId(`todo-${todo.id}`)
+            expect(display.textContent).toBe('New todo, yay!X')
+        }
+
+        const selectedTodo = screen.getByTestId('todo-1')
+        const removeBtn = within(selectedTodo).getByText('X')
+        fireEvent.click(removeBtn)
+
+        const remaining = screen.getByTestId('todo-2')
+        expect(remaining.textContent).toBe('New todo, yay!X')
+
+    })
 
 
 
